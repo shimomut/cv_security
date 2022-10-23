@@ -1,0 +1,25 @@
+type Person @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  email: AWSEmail!
+  age: Int
+  tel: AWSPhone
+  Boards: [Board] @hasMany(indexName: "byPerson", fields: ["id"])
+}
+
+type Board @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  message: String!
+  name: String
+  image: String
+  personID: ID! @index(name: "byPerson")
+}
+
+type GateEvent @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  timestamp: AWSDateTime!
+  camera_name: String!
+  image_url: String!
+  message: String!
+}
+ 
