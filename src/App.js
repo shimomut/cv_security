@@ -4,7 +4,8 @@ import './App.css';
 import '@aws-amplify/ui-react/styles.css';
 
 import { useState, useEffect } from "react";
-import { Auth } from 'aws-amplify';
+import { Auth, API, graphqlOperation } from 'aws-amplify';
+import { listPeople, listBoards } from "./graphql/queries"
 import { DataStore, Predicates, SortDirection } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 
@@ -28,7 +29,7 @@ const content2 = <PersonComponentCollection></PersonComponentCollection>
 const content3 = <p>タブ3のコンテンツ</p>
 const content4 = <p>タブ4のコンテンツ</p>
 
-function filterAndSort( input, setContent1, doChange ) {
+function updateTab1_with_DataStore( input, setContent1, doChange ) {
   DataStore.query(Board, Predicates.ALL, {
     sort: ob => ob.name(SortDirection.ASCENDING).createdAt( SortDirection.DESCENDING ),
     page: +input,
@@ -52,8 +53,51 @@ function filterAndSort( input, setContent1, doChange ) {
   );
 }
 
-function updateCreateTab() {
+function updateTab1_with_GraphQL( input, setContent1, doChange ) {
+  const option = {
+    limit: 3,
+    filter: { name: {"eq" : "Crftwr"} }
+  };
+  API.graphql( graphqlOperation(listBoards, option) ).then(
+    values => {
+      const data = values.data.listBoards.items;
+      const components = []
+      for( let item of data ){
+        components.push(
+          <BoardComponent board={item} key={item.id}/>
+        );
+      }
+      setContent1(
+        <div>{components}</div>
+      );
+    }
+  );
+
+  DataStore.query(Board, Predicates.ALL, {
+    sort: ob => ob.name(SortDirection.ASCENDING).createdAt( SortDirection.DESCENDING ),
+    page: +input,
+    limit: 3
+  }).then(
+    values => {
+      const data = []
+      for( let item of values ){
+        data.push(
+          <BoardComponent board={item} key={item.id}>
+          </BoardComponent>
+        )
+      }      
+      setContent1(
+        <div>
+          <input type="number" className='my-2 form-control' onChange={doChange} ></input>
+          {data}
+        </div>
+      )
+    }
+  );
 }
+
+//const updateTab1 = updateTab1_with_DataStore;
+const updateTab1 = updateTab1_with_GraphQL;
 
 function App() {
 
@@ -73,7 +117,7 @@ function App() {
 
   useEffect(
     () => {
-      filterAndSort( input, setContent1, doChange );
+      updateTab1( input, setContent1, doChange );
     }, [input]
   )
 
