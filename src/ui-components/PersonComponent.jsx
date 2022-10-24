@@ -20,6 +20,7 @@ export default function PersonComponent(props) {
       justifyContent="unset"
       overflow="hidden"
       position="relative"
+      border="1px SOLID rgba(0,0,0,1)"
       padding="0px 0px 0px 0px"
       backgroundColor="rgba(255,255,255,1)"
       {...rest}

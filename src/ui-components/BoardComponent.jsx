@@ -20,6 +20,7 @@ export default function BoardComponent(props) {
       justifyContent="unset"
       overflow="hidden"
       position="relative"
+      border="1px SOLID rgba(0,0,0,1)"
       padding="0px 0px 0px 0px"
       backgroundColor="rgba(255,255,255,1)"
       {...rest}
@@ -77,7 +78,7 @@ export default function BoardComponent(props) {
         gap="unset"
         alignItems="unset"
         position="absolute"
-        top="112px"
+        top="127px"
         left="22px"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
@@ -86,10 +87,10 @@ export default function BoardComponent(props) {
       ></Text>
       <Text
         fontFamily="Inter"
-        fontSize="18px"
+        fontSize="24px"
         fontWeight="400"
         color="rgba(0,0,0,1)"
-        lineHeight="21.09375px"
+        lineHeight="28.125px"
         textAlign="left"
         display="block"
         direction="column"
@@ -99,8 +100,8 @@ export default function BoardComponent(props) {
         gap="unset"
         alignItems="unset"
         position="absolute"
-        top="44px"
-        left="22px"
+        top="19px"
+        left="18px"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
         children={board?.message}
