@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3cvsecuritystorage99cc675e",
+  "bucketName": "cvsecurity-storage-99cc675e",
+  "policyUUID": "4529bb37",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "DELETE",
+    "READ"
+  ]
+}

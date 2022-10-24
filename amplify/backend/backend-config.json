@@ -52,5 +52,12 @@
         }
       }
     }
+  },
+  "storage": {
+    "s3cvsecuritystorage99cc675e": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
   }
 }
