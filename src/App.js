@@ -20,6 +20,7 @@ import { Board } from './models';
 
 //---
 
+
 //const content1 = <p>タブ1のコンテンツ</p>
 //const content1 = <BoardComponentCollection></BoardComponentCollection>
 
