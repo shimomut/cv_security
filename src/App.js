@@ -4,7 +4,12 @@ import './App.css';
 import '@aws-amplify/ui-react/styles.css';
 
 import { useState, useEffect } from "react";
-import { Auth, API, graphqlOperation } from 'aws-amplify';
+import { 
+  Auth, 
+  API,
+  graphqlOperation,
+  Storage,
+} from 'aws-amplify';
 import { 
   //listPeople, 
   listBoards 
@@ -100,17 +105,68 @@ function updateTab1_with_GraphQL( input, setContent1, doChange ) {
   );
 }
 
+function GateEventComponent( props ) {
+
+  const [image, setImage] = useState("");
+
+  var message = "Not tailgating";
+  if( props.item.security_insights.tailgating )
+  {
+    message = "Tailgating";
+  }
+
+  const opt = {
+    level : "public"
+  };
+  Storage.get( props.item.image, opt ).then(
+    value => {
+      setImage(
+        <img width="300px" src={value}></img>
+      );
+    }
+  ).catch(
+    err => {
+      setImage(
+        ""
+      );
+    }
+  );
+
+  return (
+    <div className='border border-primary px-3 py-2'>
+      <p>{props.item.camera}</p>
+      <p>{props.item.timestamp}</p>
+      <p>{message}</p>
+      {image}
+    </div>
+  );
+}
+
 
 function updateTab1_with_RestApi( input, setContent1, doChange ) {
 
   API.get( "api60ee79cf", "/gateevent" ).then(
     response => {
+
       console.log( response );
+
+      const components = []
+      for( let item of response ){
+        components.push(
+          <GateEventComponent item={item} key={ item.camera + item.timestamp }></GateEventComponent>
+        );        
+      }
+
       setContent1(
         <div>
-          <p>{response}</p>
+          {components}
         </div>
-      )    
+      )
+
+      /*
+      setContent1(
+      )
+      */   
     }
   );
 }
@@ -144,7 +200,6 @@ function App() {
   return (
     <div>
       <HeaderComponent className="my-4"/>
-      <p>これはUI Componentを使った表示です</p>
 
       <ul className='nav nav-tabs'>
         <li className='nav-item'>
