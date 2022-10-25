@@ -9,11 +9,25 @@
       "UnauthRoleName": "amplify-cvsecurity-staging-13243-unauthRole",
       "StackName": "amplify-cvsecurity-staging-13243",
       "StackId": "arn:aws:cloudformation:us-east-1:357984623133:stack/amplify-cvsecurity-staging-13243/976680a0-5272-11ed-af3c-129f1a1cc911",
-      "AmplifyAppId": "d2c1dix91b3r99"
+      "AmplifyAppId": "d2c1dix91b3r99",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-cvsecurity-staging-13243-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
         "cvsecurity": {}
+      },
+      "storage": {
+        "s3cvsecuritystorage99cc675e": {}
+      },
+      "function": {
+        "cvsecuritydfb0e247": {
+          "deploymentBucketName": "amplify-cvsecurity-staging-13243-deployment",
+          "s3Key": "amplify-builds/cvsecuritydfb0e247-673632417247646a7134-build.zip"
+        }
+      },
+      "api": {
+        "cvsecurity": {},
+        "api60ee79cf": {}
       }
     }
   }

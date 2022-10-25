@@ -51,12 +51,34 @@
           ]
         }
       }
+    },
+    "api60ee79cf": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "cvsecuritydfb0e247",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     }
   },
   "storage": {
     "s3cvsecuritystorage99cc675e": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
+  },
+  "function": {
+    "cvsecuritydfb0e247": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
       "dependsOn": []
     }
   }

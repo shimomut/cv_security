@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/gateevent": {
+      "name": "/gateevent",
+      "lambdaFunction": "cvsecuritydfb0e247",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}
