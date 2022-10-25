@@ -5,7 +5,10 @@ import '@aws-amplify/ui-react/styles.css';
 
 import { useState, useEffect } from "react";
 import { Auth, API, graphqlOperation } from 'aws-amplify';
-import { listPeople, listBoards } from "./graphql/queries"
+import { 
+  //listPeople, 
+  listBoards 
+} from "./graphql/queries"
 import { DataStore, Predicates, SortDirection } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 
@@ -97,8 +100,24 @@ function updateTab1_with_GraphQL( input, setContent1, doChange ) {
   );
 }
 
+
+function updateTab1_with_RestApi( input, setContent1, doChange ) {
+
+  API.get( "api60ee79cf", "/gateevent" ).then(
+    response => {
+      console.log( response );
+      setContent1(
+        <div>
+          <p>{response}</p>
+        </div>
+      )    
+    }
+  );
+}
+
 //const updateTab1 = updateTab1_with_DataStore;
-const updateTab1 = updateTab1_with_GraphQL;
+//const updateTab1 = updateTab1_with_GraphQL;
+const updateTab1 = updateTab1_with_RestApi;
 
 function App() {
 

@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 
 import '@aws-amplify/ui-react/styles.css';
 
-import { Auth, Storage } from 'aws-amplify';
+import { 
+    //Auth, 
+    Storage 
+} from 'aws-amplify';
 
 import { withAuthenticator } from '@aws-amplify/ui-react';
 
@@ -22,7 +25,7 @@ function func1_img( setContent ) {
     Storage.get( "sample.jpg", opt ).then(
         value => {
             setContent(
-                <img width="300px" src={value}></img>
+                <img width="300px" src={value} alt="aaa"></img>
             );
         }
     );

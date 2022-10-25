@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Other from './Other';
+//import Other from './Other';
 import reportWebVitals from './reportWebVitals';
 
 import  {AmplifyProvider} from "@aws-amplify/ui-react"
