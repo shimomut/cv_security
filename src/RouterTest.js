@@ -55,7 +55,7 @@ function NotFoundPage(props){
     );
 }
 
-function Other() {
+function RouterTest() {
 
     const home_page = <HomePage/>
 
@@ -87,4 +87,4 @@ function Other() {
     );
 }
 
-export default withAuthenticator(Other);
+export default withAuthenticator(RouterTest);
