@@ -16,70 +16,74 @@ import {
   //PersonComponentCollection 
 } from "./ui-components"
 
-function func1_img( setContent ) {
+import { 
+    BrowserRouter, 
+    Route,
+    Routes,
+    Link,
+} from 'react-router-dom';
 
-    const opt = {
-        level : "public"
-    };
-
-    Storage.get( "sample.jpg", opt ).then(
-        value => {
-            setContent(
-                <img width="300px" src={value} alt="aaa"></img>
-            );
-        }
-    );
-}
-
-function func1_txt( setContent ) {
-
-    const opt = {
-        level : "public",
-        download : true,
-    };
-
-    Storage.get( "sample.txt", opt ).then(
-        value => {
-            value.Body.text().then(
-                data => {
-                    const arr = data.split("\n");
-                    const res = [];
-                    for( let item of arr ){
-                        res.push( <li>{item}</li> );
-                    }
-
-                    setContent(
-                        <ul>{res}</ul>
-                    );
-                            
-                }
-            );
-        }
-    );
-}
-
-//const func1 = func1_img;
-const func1 = func1_txt;
-
-function Other() {
-    const [content, setContent] = useState("");
-
-    useEffect( 
-        ()=>{
-            func1(setContent);
-        },
-        []
-    );
-
+function HomePage(props){
     return (
         <div>
-            <HeaderComponent className="my-4">
-            </HeaderComponent>
-            <p>Other.jsの画面です</p>
-            <div className="border border-primary px-3 py-2">
-                {content}
-            </div>
+            <p>This is home.</p>
         </div>
+    );
+}
+
+function ListPage(props){
+    return (
+        <div>
+            <p>This is List page.</p>
+        </div>
+    );
+}
+
+function AboutPage(props){
+    return (
+        <div>
+            <p>This is About page.</p>
+        </div>
+    );
+}
+
+function NotFoundPage(props){
+    return (
+        <div>
+            <p>This is NotFound page.</p>
+        </div>
+    );
+}
+
+function Other() {
+
+    const home_page = <HomePage/>
+
+    return (
+        <BrowserRouter>
+            <h1>Router test</h1>
+
+            <ul>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    <Link to="/list">List</Link>
+                </li>
+                <li>
+                    <Link to="/about">About</Link>
+                </li>
+            </ul>
+
+            <Routes>
+                <Route path="/" element={home_page} />
+                <Route path="/list" element={<ListPage/>} />
+                <Route path="/about" element={<AboutPage/>} />
+                <Route path="*" element={<NotFoundPage/>} />
+            </Routes>
+        </BrowserRouter>
+  
+
     );
 }
 

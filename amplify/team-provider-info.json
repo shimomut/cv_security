@@ -22,7 +22,7 @@
       "function": {
         "cvsecuritydfb0e247": {
           "deploymentBucketName": "amplify-cvsecurity-staging-13243-deployment",
-          "s3Key": "amplify-builds/cvsecuritydfb0e247-48534f58336f4e586e53-build.zip"
+          "s3Key": "amplify-builds/cvsecuritydfb0e247-5534354c31617048754d-build.zip"
         }
       },
       "api": {
