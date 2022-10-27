@@ -1,16 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+//import App from './App';
 import Other from './Other';
 import reportWebVitals from './reportWebVitals';
 
-import  {AmplifyProvider} from "@aws-amplify/ui-react"
+//import  {AmplifyProvider} from "@aws-amplify/ui-react"
 import awsconfig from "./aws-exports"
 import {Amplify} from "aws-amplify"
 Amplify.configure(awsconfig);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+//const root = ReactDOM.createRoot(document.getElementById('root'));
 
 /*
 root.render(
@@ -22,12 +22,11 @@ root.render(
 );
 */
 
-root.render(
-  <React.StrictMode>
-    <AmplifyProvider>
+ReactDOM.render(
+  (
       <Other/>
-    </AmplifyProvider>
-  </React.StrictMode>
+  ),
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
