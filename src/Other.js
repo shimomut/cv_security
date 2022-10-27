@@ -1,46 +1,30 @@
 import { useState, useEffect } from "react";
 
-//import '@aws-amplify/ui-react/styles.css';
-
 import {
     //Auth, 
     Storage,
     API,
 } from 'aws-amplify';
 
-//import { withAuthenticator } from '@aws-amplify/ui-react';
-
-/*
-import { 
-  HeaderComponent,
-  //BoardComponent,
-  //BoardComponentCollection,
-  //PersonComponentCollection 
-} from "./ui-components"
-*/
-
 import NorthStarThemeProvider from 'aws-northstar/components/NorthStarThemeProvider';
+import AppLayout from 'aws-northstar/layouts/AppLayout';
+import Header from 'aws-northstar/components/Header';
+import SideNavigation from 'aws-northstar/components/SideNavigation';
+import { SideNavigationItemType } from 'aws-northstar/components/SideNavigation';
+import BreadcrumbGroup from 'aws-northstar/components/BreadcrumbGroup';
 import Button from 'aws-northstar/components/Button';
 
 import {
     BrowserRouter,
     Route,
     Switch,
-    Link,
+    //Link,
 } from 'react-router-dom';
 
 function HomePage(props) {
     return (
         <div>
             <p>This is home.</p>
-        </div>
-    );
-}
-
-function ListPage(props) {
-    return (
-        <div>
-            <p>This is List page.</p>
         </div>
     );
 }
@@ -76,7 +60,7 @@ function GateEventComponent(props) {
     Storage.get(props.item.image, opt).then(
         value => {
             setImage(
-                <img width="300px" src={value}></img>
+                <img width="300px" src={value} alt=""></img>
             );
         }
     ).catch(
@@ -88,16 +72,13 @@ function GateEventComponent(props) {
     );
 
     return (
-        <div className='border border-primary px-3 py-2'>
+        <div style={{ border:"2px solid black", padding:"10px" }}>
             <p>{props.item.camera}</p>
             <p>{props.item.timestamp}</p>
             <p>{message}</p>
             {image}
         </div>
     );
-}
-
-function updateGateEvents( setContent ){
 }
 
 function GateEventListPage(){
@@ -137,35 +118,70 @@ function GateEventListPage(){
     );
 }
 
+
+
+
 function Other() {
+
+    const header = <Header
+        title={"Panorama Security App"}
+        rightContent={
+            <Button variant="primary">Button test</Button>
+        }
+    />;
+    
+    const navigation_header = {
+        href: "/",
+        text: 'Menu'
+    };
+
+    const navigation_items = [
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "Home",
+            "href": "/"
+        },
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "List",
+            "href": "/list"
+        },
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "About",
+            "href": "/about"
+        },
+    ];
+
+    const breadcrumbs_items = [
+        {
+            text: "Home",
+            href: "/",
+        },
+        {
+            text: "AAA",
+            href: "/",
+        },
+        {
+            text: "BBB",
+            href: "#",
+        }
+    ];
+
+    const navigation = <SideNavigation header={navigation_header} items={navigation_items} />
+    const breadcrumbs = <BreadcrumbGroup items={breadcrumbs_items} />
 
     return (
         <NorthStarThemeProvider>
             <BrowserRouter>
-                <h1>Menu</h1>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/list">List</Link>
-                    </li>
-                    <li>
-                        <Link to="/about">About</Link>
-                    </li>
-                </ul>
-
-                <h1>Contents</h1>
-
-                <Switch>
-                    <Route exact path="/" component={HomePage} />
-                    <Route exact path="/list" component={GateEventListPage} />
-                    <Route exact path="/about" component={AboutPage} />
-                    <Route component={NotFoundPage} />
-                </Switch>
-
-                <Button variant="primary">Button test</Button>
-
+                <AppLayout header={header} navigation={navigation} breadcrumbs={breadcrumbs} >
+                    <Switch>
+                        <Route exact path="/" component={HomePage} />
+                        <Route exact path="/list" component={GateEventListPage} />
+                        <Route exact path="/about" component={AboutPage} />
+                        <Route component={NotFoundPage} />
+                    </Switch>
+                </AppLayout>
             </BrowserRouter>
         </NorthStarThemeProvider>
     );
