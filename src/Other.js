@@ -49,15 +49,19 @@ function GateEventComponent(props) {
 
     const [image, setImage] = useState("");
 
+    const s3_path = props.item.image.split("/")
+    console.log(s3_path)
+    const image_filename = s3_path[ s3_path.length - 1 ]
+
     var message = "Not tailgating";
-    if (props.item.security_insights.tailgating) {
+    if (props.item.security_insights.is_tailgating) {
         message = "Tailgating";
     }
 
     const opt = {
         level: "public"
     };
-    Storage.get(props.item.image, opt).then(
+    Storage.get(image_filename, opt).then(
         value => {
             setImage(
                 <img width="300px" src={value} alt=""></img>
@@ -73,9 +77,9 @@ function GateEventComponent(props) {
 
     return (
         <div style={{ border:"2px solid black", padding:"10px" }}>
-            <p>{props.item.camera}</p>
+            <p>{props.item["app-name"]}</p>
+            <p>{props.item["camera-name"]}</p>
             <p>{props.item.timestamp}</p>
-            <p>{message}</p>
             {image}
         </div>
     );
