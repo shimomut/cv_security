@@ -17,7 +17,7 @@ def handler(event, context):
     query_response = table.query( 
         KeyConditionExpression=Key('app-name').eq('demo'),
         ScanIndexForward=False,
-        Limit=100,
+        Limit=10,
     )
 
     print("Response from DDB:", query_response)
