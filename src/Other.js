@@ -49,8 +49,8 @@ function GateEventComponent(props) {
 
     const [image, setImage] = useState("");
 
+    // FIXME : should use better logic to find the path (e.g. regex)
     const s3_path = props.item.image.split("/")
-    console.log(s3_path)
     const image_filename = s3_path[ s3_path.length - 1 ]
 
     var message = "Not tailgating";
@@ -58,21 +58,26 @@ function GateEventComponent(props) {
         message = "Tailgating";
     }
 
-    const opt = {
-        level: "public"
-    };
-    Storage.get(image_filename, opt).then(
-        value => {
-            setImage(
-                <img width="300px" src={value} alt=""></img>
+    useEffect(
+        () => {
+            const opt = {
+                level: "public"
+            };
+            Storage.get(image_filename, opt).then(
+                value => {
+                    setImage(
+                        <img width="300px" src={value} alt=""></img>
+                    );
+                }
+            ).catch(
+                err => {
+                    setImage(
+                        ""
+                    );
+                }
             );
-        }
-    ).catch(
-        err => {
-            setImage(
-                ""
-            );
-        }
+        },
+        []
     );
 
     return (
