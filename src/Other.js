@@ -12,7 +12,8 @@ import Header from 'aws-northstar/components/Header';
 import SideNavigation from 'aws-northstar/components/SideNavigation';
 import { SideNavigationItemType } from 'aws-northstar/components/SideNavigation';
 import BreadcrumbGroup from 'aws-northstar/components/BreadcrumbGroup';
-import Button from 'aws-northstar/components/Button';
+//import Button from 'aws-northstar/components/Button';
+import Icon from 'aws-northstar/components/Icon';
 
 import {
     BrowserRouter,
@@ -163,7 +164,8 @@ function Other() {
     const header = <Header
         title={"Panorama Security App"}
         rightContent={
-            <Button variant="primary">Button test</Button>
+            //<Button variant="primary">Button test</Button>
+            <Icon name="AccountCircle" fontSize="large" variant="Outlined"/>
         }
     />;
     
@@ -231,14 +233,13 @@ function Other() {
                     "text": "Report issues",
                     "href": "/reportissues"
                 },
-                {
-                    "type": SideNavigationItemType.LINK,
-                    "text": "About",
-                    "href": "/about"
-                },
             ],
         },
-
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "About this application",
+            "href": "/about"
+        },
     ];
 
     const breadcrumbs_items = [
