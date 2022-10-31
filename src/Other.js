@@ -22,17 +22,21 @@ import {
 } from 'react-router-dom';
 
 function HomePage(props) {
-    return (
-        <div>
-            <p>This is home.</p>
-        </div>
-    );
+    return NotImplementedPage()
 }
 
 function AboutPage(props) {
     return (
         <div>
             <p>This is About page.</p>
+        </div>
+    );
+}
+
+function NotImplementedPage(props){
+    return (
+        <div>
+            <h2>Not implemented.</h2>
         </div>
     );
 }
@@ -171,19 +175,70 @@ function Other() {
     const navigation_items = [
         {
             "type": SideNavigationItemType.LINK,
-            "text": "Home",
-            "href": "/"
+            "text": "Charts",
+            "href": "/charts"
         },
         {
             "type": SideNavigationItemType.LINK,
-            "text": "List",
-            "href": "/list"
+            "text": "Events",
+            "href": "/events"
         },
         {
             "type": SideNavigationItemType.LINK,
-            "text": "About",
-            "href": "/about"
+            "text": "Live Cameras",
+            "href": "/livecameras"
         },
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "Advanced",
+            "href": "/advanced",
+            "items" : [
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Manage Accounts",
+                    "href": "/accounts"
+                },
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Archived Data",
+                    "href": "/archives"
+                },
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Manage AI Model",
+                    "href": "/model"
+                },
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Add-ons",
+                    "href": "/addons"
+                },
+            ],
+        },
+
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "Help",
+            "href": "/help",
+            "items" : [
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Documents",
+                    "href": "/documents"
+                },
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Report issues",
+                    "href": "/reportissues"
+                },
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "About",
+                    "href": "/about"
+                },
+            ],
+        },
+
     ];
 
     const breadcrumbs_items = [
@@ -210,7 +265,8 @@ function Other() {
                 <AppLayout header={header} navigation={navigation} breadcrumbs={breadcrumbs} >
                     <Switch>
                         <Route exact path="/" component={HomePage} />
-                        <Route exact path="/list" component={GateEventListPage} />
+                        <Route exact path="/events" component={GateEventListPage} />
+                        <Route exact path="/notimplemented" component={NotImplementedPage} />
                         <Route exact path="/about" component={AboutPage} />
                         <Route component={NotFoundPage} />
                     </Switch>
