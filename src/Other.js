@@ -45,6 +45,26 @@ function NotFoundPage(props) {
     );
 }
 
+function fromTimestamptoDateTimeString(timestamp){
+    var dt = new Date(timestamp * 1000);
+    var year = dt.getFullYear();
+    var month = dt.getMonth();
+    var date = dt.getDate();
+    var hour = dt.getHours();
+    var min = dt.getMinutes();
+    var sec = dt.getSeconds();
+    var time = year + '-' + (month+1) + '-' + date + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
+}
+
+function resolveCameraName( name )
+{
+    // Remove UUID part
+    // e.g. Laptop1d2c6588d-d4df-4343-84d5-3e873a918cb2 -> Laptop1
+
+    return name.substring( 0, name.length - 36 );
+}
+
 function GateEventComponent(props) {
 
     const [image, setImage] = useState("");
@@ -53,10 +73,14 @@ function GateEventComponent(props) {
     const s3_path = props.item.image.split("/")
     const image_filename = s3_path[ s3_path.length - 1 ]
 
-    var message = "Not tailgating";
+    var security_insights = "OK";
     if (props.item.security_insights.is_tailgating) {
-        message = "Tailgating";
+        security_insights = "Tailgating";
     }
+
+    var dt = fromTimestamptoDateTimeString( props.item.timestamp );
+
+    var camera_name = resolveCameraName( props.item["camera-name"] );
 
     useEffect(
         () => {
@@ -82,9 +106,9 @@ function GateEventComponent(props) {
 
     return (
         <div style={{ border:"2px solid black", padding:"10px" }}>
-            <p>{props.item["app-name"]}</p>
-            <p>{props.item["camera-name"]}</p>
-            <p>{props.item.timestamp}</p>
+            <p>Camera : {camera_name}</p>
+            <p>Timestamp : {dt}</p>
+            <p>Security insights : {security_insights}</p>
             {image}
         </div>
     );
