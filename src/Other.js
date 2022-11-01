@@ -15,6 +15,14 @@ import BreadcrumbGroup from 'aws-northstar/components/BreadcrumbGroup';
 //import Button from 'aws-northstar/components/Button';
 import Icon from 'aws-northstar/components/Icon';
 
+import KeyValuePair from 'aws-northstar/components/KeyValuePair';
+//import Container from 'aws-northstar/layouts/Container';
+import ColumnLayout, { Column } from 'aws-northstar/layouts/ColumnLayout';
+import Stack from 'aws-northstar/layouts/Stack';
+import StatusIndicator from 'aws-northstar/components/StatusIndicator';
+import Link from 'aws-northstar/components/Link';
+import LoadingIndicator from 'aws-northstar/components/LoadingIndicator';
+
 import {
     BrowserRouter,
     Route,
@@ -68,6 +76,73 @@ function resolveCameraName( name )
     // e.g. Laptop1d2c6588d-d4df-4343-84d5-3e873a918cb2 -> Laptop1
 
     return name.substring( 0, name.length - 36 );
+}
+
+function GateEventComponent_Column(props){
+
+    const [image, setImage] = useState(
+        <LoadingIndicator/>
+    );
+
+    // FIXME : should use better logic to find the path (e.g. regex)
+    const s3_path = props.item.image.split("/")
+    const image_filename = s3_path[ s3_path.length - 1 ]
+
+    var security_insights = "OK";
+    if (props.item.security_insights.is_tailgating) {
+        security_insights = "Tailgating";
+    }
+
+    var dt = fromTimestamptoDateTimeString( props.item.timestamp );
+
+    var camera_name = resolveCameraName( props.item["camera-name"] );
+
+    useEffect(
+        () => {
+            const opt = {
+                level: "public"
+            };
+            Storage.get(image_filename, opt).then(
+                value => {
+                    setImage(
+                        <img width="300px" src={value} alt=""></img>
+                    );
+                }
+            ).catch(
+                err => {
+                    setImage(
+                        ""
+                    );
+                }
+            );
+        },
+        []
+    );
+
+
+    const Status = <StatusIndicator statusType="positive">Available</StatusIndicator>;
+
+    return (
+        <div>
+            <ColumnLayout>
+                <Column key="column1">
+                    {image}
+                </Column>
+                <Column key="column2">
+                    <Stack>
+                        <KeyValuePair label="Status" value={Status}></KeyValuePair>
+                    </Stack>
+                </Column>
+                <Column key="column3">
+                    <Stack>
+                        <KeyValuePair label="Camera" value={camera_name}></KeyValuePair>
+                        <KeyValuePair label="Timestamp" value={dt}></KeyValuePair>
+                    </Stack>
+                </Column>
+            </ColumnLayout>
+            <hr/>
+        </div>
+    );
 }
 
 function GateEventComponent(props) {
@@ -134,7 +209,8 @@ function GateEventListPage(){
                     const components = []
                     for (let item of response) {
                         components.push(
-                            <GateEventComponent item={item} key={item.camera + item.timestamp}></GateEventComponent>
+                            //<GateEventComponent item={item} key={item.camera + item.timestamp}></GateEventComponent>
+                            <GateEventComponent_Column item={item} key={item.camera + item.timestamp}></GateEventComponent_Column>
                         );
                     }
                 
