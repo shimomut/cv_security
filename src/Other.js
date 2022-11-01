@@ -23,6 +23,10 @@ import StatusIndicator from 'aws-northstar/components/StatusIndicator';
 import Link from 'aws-northstar/components/Link';
 import LoadingIndicator from 'aws-northstar/components/LoadingIndicator';
 
+import Table from 'aws-northstar/components/Table';
+import { useMemo, useCallback, useRef } from 'react';
+import orderBy from 'lodash/orderBy';
+
 import {
     BrowserRouter,
     Route,
@@ -232,7 +236,76 @@ function GateEventListPage(){
     );
 }
 
+function TableListTestPage(){
 
+    const columnDefinitions = [
+        {
+            id: 'id',
+            width: 200,
+            Header: 'Id',
+            accessor: 'id'
+        },
+        {
+            id: 'name',
+            width: 200,
+            Header: 'Name',
+            accessor: 'name'
+        },
+    ];
+    
+    const [items, setItems] = useState([]);
+    const [rowCount, setRowCount] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const fetchIdRef = useRef(0);
+    const data = useMemo(() => {
+        const data = [];
+        for (let i = 0; i < 1000; i++) {
+            data.push({
+                id: i,
+                name: `Name ${i}`,
+            });
+        }
+    
+        return data;
+    }, []);
+    const handleFetchData = useCallback(options => {
+        setLoading(true);
+        const fetchId = ++fetchIdRef.current;
+        setTimeout(() => {
+            if (fetchId === fetchIdRef.current) {
+                // You could fetch your data from server.
+                const filterData = data.filter(d => {
+                    if (options.filterText) {
+                        return d.name.indexOf(options.filterText) >= 0;
+                    }
+    
+                    return true;
+                });
+                let tempData = filterData.slice(
+                    options.pageIndex * options.pageSize,
+                    (options.pageIndex + 1) * options.pageSize
+                );
+                if(options.sortBy && options.sortBy.length > 0) {
+                    tempData = orderBy(tempData, options.sortBy[0].id, options.sortBy[0].desc ? 'desc': 'asc');
+                }
+                setItems(tempData);
+                setRowCount(filterData.length);
+                setLoading(false);
+            }
+        }, 1000);
+    }, []);
+    
+    return (
+        <Table
+            tableTitle='Remote Update Table'
+            columnDefinitions={columnDefinitions}
+            onFetchData={handleFetchData}
+            rowCount={rowCount}
+            items={items}
+            loading={loading}
+        />
+    );
+}
 
 
 function Other() {
@@ -343,6 +416,7 @@ function Other() {
                     <Switch>
                         <Route exact path="/" component={HomePage} />
                         <Route exact path="/events" component={GateEventListPage} />
+                        <Route exact path="/livecameras" component={TableListTestPage} />
                         <Route exact path="/notimplemented" component={NotImplementedPage} />
                         <Route exact path="/about" component={AboutPage} />
                         <Route component={NotFoundPage} />
