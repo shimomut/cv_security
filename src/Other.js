@@ -88,14 +88,9 @@ function GateEventComponent_Column(props){
     const s3_path = props.item.image.split("/")
     const image_filename = s3_path[ s3_path.length - 1 ]
 
-    var security_insights = "OK";
-    if (props.item.security_insights.is_tailgating) {
-        security_insights = "Tailgating";
-    }
+    const dt = fromTimestamptoDateTimeString( props.item.timestamp );
 
-    var dt = fromTimestamptoDateTimeString( props.item.timestamp );
-
-    var camera_name = resolveCameraName( props.item["camera-name"] );
+    const camera_name = resolveCameraName( props.item["camera-name"] );
 
     useEffect(
         () => {
@@ -119,8 +114,10 @@ function GateEventComponent_Column(props){
         []
     );
 
-
-    const Status = <StatusIndicator statusType="positive">Available</StatusIndicator>;
+    var status_indicator = <StatusIndicator statusType="positive">OK</StatusIndicator>;
+    if (props.item.security_insights.is_tailgating) {
+        status_indicator = <StatusIndicator statusType="negative">Tailgating</StatusIndicator>;
+    }
 
     return (
         <div>
@@ -130,11 +127,7 @@ function GateEventComponent_Column(props){
                 </Column>
                 <Column key="column2">
                     <Stack>
-                        <KeyValuePair label="Status" value={Status}></KeyValuePair>
-                    </Stack>
-                </Column>
-                <Column key="column3">
-                    <Stack>
+                        <KeyValuePair label="Status" value={status_indicator}></KeyValuePair>
                         <KeyValuePair label="Camera" value={camera_name}></KeyValuePair>
                         <KeyValuePair label="Timestamp" value={dt}></KeyValuePair>
                     </Stack>
