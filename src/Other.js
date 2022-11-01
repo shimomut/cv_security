@@ -78,7 +78,7 @@ function resolveCameraName( name )
     return name.substring( 0, name.length - 36 );
 }
 
-function GateEventComponent_Column(props){
+function GateEventComponent(props){
 
     const [image, setImage] = useState(
         <LoadingIndicator/>
@@ -138,55 +138,6 @@ function GateEventComponent_Column(props){
     );
 }
 
-function GateEventComponent(props) {
-
-    const [image, setImage] = useState("");
-
-    // FIXME : should use better logic to find the path (e.g. regex)
-    const s3_path = props.item.image.split("/")
-    const image_filename = s3_path[ s3_path.length - 1 ]
-
-    var security_insights = "OK";
-    if (props.item.security_insights.is_tailgating) {
-        security_insights = "Tailgating";
-    }
-
-    var dt = fromTimestamptoDateTimeString( props.item.timestamp );
-
-    var camera_name = resolveCameraName( props.item["camera-name"] );
-
-    useEffect(
-        () => {
-            const opt = {
-                level: "public"
-            };
-            Storage.get(image_filename, opt).then(
-                value => {
-                    setImage(
-                        <img width="300px" src={value} alt=""></img>
-                    );
-                }
-            ).catch(
-                err => {
-                    setImage(
-                        ""
-                    );
-                }
-            );
-        },
-        []
-    );
-
-    return (
-        <div style={{ border:"2px solid black", padding:"10px" }}>
-            <p>Camera : {camera_name}</p>
-            <p>Timestamp : {dt}</p>
-            <p>Security insights : {security_insights}</p>
-            {image}
-        </div>
-    );
-}
-
 function GateEventListPage(){
 
     const [content, setContent] = useState("");
@@ -202,8 +153,7 @@ function GateEventListPage(){
                     const components = []
                     for (let item of response) {
                         components.push(
-                            //<GateEventComponent item={item} key={item.camera + item.timestamp}></GateEventComponent>
-                            <GateEventComponent_Column item={item} key={item.camera + item.timestamp}></GateEventComponent_Column>
+                            <GateEventComponent item={item} key={item.camera + item.timestamp}></GateEventComponent>
                         );
                     }
                 
