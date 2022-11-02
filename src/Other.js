@@ -12,8 +12,10 @@ import Header from 'aws-northstar/components/Header';
 import SideNavigation from 'aws-northstar/components/SideNavigation';
 import { SideNavigationItemType } from 'aws-northstar/components/SideNavigation';
 import BreadcrumbGroup from 'aws-northstar/components/BreadcrumbGroup';
-//import Button from 'aws-northstar/components/Button';
+import Button from 'aws-northstar/components/Button';
 import Icon from 'aws-northstar/components/Icon';
+import Text from 'aws-northstar/components/Text';
+import Box from 'aws-northstar/layouts/Box';
 
 import KeyValuePair from 'aws-northstar/components/KeyValuePair';
 //import Container from 'aws-northstar/layouts/Container';
@@ -22,6 +24,7 @@ import Stack from 'aws-northstar/layouts/Stack';
 import StatusIndicator from 'aws-northstar/components/StatusIndicator';
 import Link from 'aws-northstar/components/Link';
 import LoadingIndicator from 'aws-northstar/components/LoadingIndicator';
+import Inline from 'aws-northstar/layouts/Inline';
 
 import {
     BrowserRouter,
@@ -138,7 +141,7 @@ function GateEventComponent(props){
     );
 }
 
-function GateEventListPage(){
+function GateEventList(){
 
     const [content, setContent] = useState("");
 
@@ -175,7 +178,37 @@ function GateEventListPage(){
     );
 }
 
+function PageLinks(props){
 
+    const s_prev = "< Prev";
+    const s_next = "Next >";
+
+    return (
+        //<Box display="flex" marginTop="10px" marginBottom="10px" alignSelf="center" alignItems="center" alignContent="center">
+        <Box>
+            <Inline spacing="none">
+                <Link href="/events?page=1">&nbsp;{s_prev}&nbsp;</Link>
+                <Text>&nbsp;1&nbsp;</Text>
+                <Link href="/events?page=2">&nbsp;2&nbsp;</Link>
+                <Link href="/events?page=3">&nbsp;3&nbsp;</Link>
+                <Link href="/events?page=3">&nbsp;{s_next}&nbsp;</Link>
+            </Inline>
+        </Box>
+    );    
+}
+
+function GateEventListPage(props){
+
+    console.log(props);
+
+    return (
+        <div>
+            <PageLinks></PageLinks>
+            <GateEventList></GateEventList>
+            <PageLinks></PageLinks>
+        </div>
+    );
+}
 
 
 function Other() {
