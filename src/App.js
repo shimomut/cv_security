@@ -26,6 +26,8 @@ import Link from 'aws-northstar/components/Link';
 import LoadingIndicator from 'aws-northstar/components/LoadingIndicator';
 import Inline from 'aws-northstar/layouts/Inline';
 
+import AddOnsPage from './pages/AddOnsPage';
+
 import {
     BrowserRouter,
     Route,
@@ -315,10 +317,11 @@ function Other() {
     return (
         <NorthStarThemeProvider>
             <BrowserRouter>
-                <AppLayout header={header} navigation={navigation} breadcrumbs={breadcrumbs} >
+                <AppLayout header={header} navigation={navigation} >
                     <Switch>
                         <Route exact path="/" component={HomePage} />
                         <Route exact path="/events" component={GateEventListPage} />
+                        <Route exact path="/addons" component={AddOnsPage} />
                         <Route exact path="/notimplemented" component={NotImplementedPage} />
                         <Route exact path="/about" component={AboutPage} />
                         <Route component={NotFoundPage} />
