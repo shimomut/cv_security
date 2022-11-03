@@ -1,245 +1,333 @@
-
-import './App.css';
-
-import '@aws-amplify/ui-react/styles.css';
-
 import { useState, useEffect } from "react";
-import { 
-  Auth, 
-  API,
-  graphqlOperation,
-  Storage,
+
+import {
+    //Auth, 
+    Storage,
+    API,
 } from 'aws-amplify';
-import { 
-  //listPeople, 
-  listBoards 
-} from "./graphql/queries"
-import { DataStore, Predicates, SortDirection } from 'aws-amplify';
-import { withAuthenticator } from '@aws-amplify/ui-react';
 
-import { 
-  HeaderComponent,
-  BoardComponent,
-  //BoardComponentCollection,
-  PersonComponentCollection 
-} from "./ui-components"
+import NorthStarThemeProvider from 'aws-northstar/components/NorthStarThemeProvider';
+import AppLayout from 'aws-northstar/layouts/AppLayout';
+import Header from 'aws-northstar/components/Header';
+import SideNavigation from 'aws-northstar/components/SideNavigation';
+import { SideNavigationItemType } from 'aws-northstar/components/SideNavigation';
+import BreadcrumbGroup from 'aws-northstar/components/BreadcrumbGroup';
+import Button from 'aws-northstar/components/Button';
+import Icon from 'aws-northstar/components/Icon';
+import Text from 'aws-northstar/components/Text';
+import Box from 'aws-northstar/layouts/Box';
 
-import { Board } from './models';
+import KeyValuePair from 'aws-northstar/components/KeyValuePair';
+//import Container from 'aws-northstar/layouts/Container';
+import ColumnLayout, { Column } from 'aws-northstar/layouts/ColumnLayout';
+import Stack from 'aws-northstar/layouts/Stack';
+import StatusIndicator from 'aws-northstar/components/StatusIndicator';
+import Link from 'aws-northstar/components/Link';
+import LoadingIndicator from 'aws-northstar/components/LoadingIndicator';
+import Inline from 'aws-northstar/layouts/Inline';
 
-//---
+import {
+    BrowserRouter,
+    Route,
+    Switch,
+    //Link,
+} from 'react-router-dom';
 
+function HomePage(props) {
+    return NotImplementedPage()
+}
 
-//const content1 = <p>タブ1のコンテンツ</p>
-//const content1 = <BoardComponentCollection></BoardComponentCollection>
-
-//const content2 = <p>タブ2のコンテンツ</p>
-const content2 = <PersonComponentCollection></PersonComponentCollection>
-
-const content3 = <p>タブ3のコンテンツ</p>
-const content4 = <p>タブ4のコンテンツ</p>
-
-function updateTab1_with_DataStore( input, setContent1, doChange ) {
-  DataStore.query(Board, Predicates.ALL, {
-    sort: ob => ob.name(SortDirection.ASCENDING).createdAt( SortDirection.DESCENDING ),
-    page: +input,
-    limit: 3
-  }).then(
-    values => {
-      const data = []
-      for( let item of values ){
-        data.push(
-          <BoardComponent board={item} key={item.id}>
-          </BoardComponent>
-        )
-      }      
-      setContent1(
+function AboutPage(props) {
+    return (
         <div>
-          <input type="number" className='my-2 form-control' onChange={doChange} ></input>
-          {data}
+            <p>This is About page.</p>
         </div>
-      )
-    }
-  );
+    );
 }
 
-function updateTab1_with_GraphQL( input, setContent1, doChange ) {
-  const option = {
-    limit: 3,
-    filter: { name: {"eq" : "Crftwr"} }
-  };
-  API.graphql( graphqlOperation(listBoards, option) ).then(
-    values => {
-      const data = values.data.listBoards.items;
-      const components = []
-      for( let item of data ){
-        components.push(
-          <BoardComponent board={item} key={item.id}/>
-        );
-      }
-      setContent1(
-        <div>{components}</div>
-      );
-    }
-  );
-
-  DataStore.query(Board, Predicates.ALL, {
-    sort: ob => ob.name(SortDirection.ASCENDING).createdAt( SortDirection.DESCENDING ),
-    page: +input,
-    limit: 3
-  }).then(
-    values => {
-      const data = []
-      for( let item of values ){
-        data.push(
-          <BoardComponent board={item} key={item.id}>
-          </BoardComponent>
-        )
-      }      
-      setContent1(
+function NotImplementedPage(props){
+    return (
         <div>
-          <input type="number" className='my-2 form-control' onChange={doChange} ></input>
-          {data}
+            <h2>Not implemented.</h2>
         </div>
-      )
-    }
-  );
+    );
 }
 
-function GateEventComponent( props ) {
-
-  const [image, setImage] = useState("");
-
-  var message = "Not tailgating";
-  if( props.item.security_insights.tailgating )
-  {
-    message = "Tailgating";
-  }
-
-  const opt = {
-    level : "public"
-  };
-  Storage.get( props.item.image, opt ).then(
-    value => {
-      setImage(
-        <img width="300px" src={value}></img>
-      );
-    }
-  ).catch(
-    err => {
-      setImage(
-        ""
-      );
-    }
-  );
-
-  return (
-    <div className='border border-primary px-3 py-2'>
-      <p>{props.item.camera}</p>
-      <p>{props.item.timestamp}</p>
-      <p>{message}</p>
-      {image}
-    </div>
-  );
-}
-
-
-function updateTab1_with_RestApi( input, setContent1, doChange ) {
-
-  API.get( "api60ee79cf", "/gateevent" ).then(
-    response => {
-
-      console.log( response );
-
-      const components = []
-      for( let item of response ){
-        components.push(
-          <GateEventComponent item={item} key={ item.camera + item.timestamp }></GateEventComponent>
-        );        
-      }
-
-      setContent1(
+function NotFoundPage(props) {
+    return (
         <div>
-          {components}
+            <p>This is NotFound page.</p>
         </div>
-      )
+    );
+}
 
-      /*
-      setContent1(
-      )
-      */   
+function fromTimestamptoDateTimeString(timestamp){
+    var dt = new Date(timestamp * 1000);
+    var year = dt.getFullYear();
+    var month = dt.getMonth();
+    var date = dt.getDate();
+    var hour = dt.getHours();
+    var min = dt.getMinutes();
+    var sec = dt.getSeconds();
+    var time = year + '-' + (month+1) + '-' + date + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
+}
+
+function resolveCameraName( name )
+{
+    // Remove UUID part
+    // e.g. Laptop1d2c6588d-d4df-4343-84d5-3e873a918cb2 -> Laptop1
+
+    return name.substring( 0, name.length - 36 );
+}
+
+function GateEventComponent(props){
+
+    const [image, setImage] = useState(
+        <LoadingIndicator/>
+    );
+
+    // FIXME : should use better logic to find the path (e.g. regex)
+    const s3_path = props.item.image.split("/")
+    const image_filename = s3_path[ s3_path.length - 1 ]
+
+    const dt = fromTimestamptoDateTimeString( props.item.timestamp );
+
+    const camera_name = resolveCameraName( props.item["camera-name"] );
+
+    useEffect(
+        () => {
+            const opt = {
+                level: "public"
+            };
+            Storage.get(image_filename, opt).then(
+                value => {
+                    setImage(
+                        <img width="300px" src={value} alt=""></img>
+                    );
+                }
+            ).catch(
+                err => {
+                    setImage(
+                        ""
+                    );
+                }
+            );
+        },
+        []
+    );
+
+    var status_indicator = <StatusIndicator statusType="positive">OK</StatusIndicator>;
+    if (props.item.security_insights.is_tailgating) {
+        status_indicator = <StatusIndicator statusType="negative">Tailgating</StatusIndicator>;
     }
-  );
+
+    return (
+        <div>
+            <ColumnLayout>
+                <Column key="column1">
+                    {image}
+                </Column>
+                <Column key="column2">
+                    <Stack>
+                        <KeyValuePair label="Status" value={status_indicator}></KeyValuePair>
+                        <KeyValuePair label="Camera" value={camera_name}></KeyValuePair>
+                        <KeyValuePair label="Timestamp" value={dt}></KeyValuePair>
+                    </Stack>
+                </Column>
+            </ColumnLayout>
+            <hr/>
+        </div>
+    );
 }
 
-//const updateTab1 = updateTab1_with_DataStore;
-//const updateTab1 = updateTab1_with_GraphQL;
-const updateTab1 = updateTab1_with_RestApi;
+function GateEventList(){
 
-function App() {
+    const [content, setContent] = useState("");
 
-  const [content1, setContent1] = useState("");
-  const [input, setInput] = useState(0);
-  //const [find, setFind] = useState(input);
+    useEffect(
+        () => {
+            API.get("restapi", "/event").then(
 
-  function doChange(e) {
-    setInput( +e.target.value );
-  }
+                response => {
+        
+                    console.log(response);
+        
+                    const components = []
+                    for (let item of response) {
+                        components.push(
+                            <GateEventComponent item={item} key={item.camera + item.timestamp}></GateEventComponent>
+                        );
+                    }
+                
+                    setContent( components )
+                }
+            ).catch(
+                err => {
+                    console.log(err)
+                }
+            );        
+        },
+        []
+    );
 
-  /*
-  function doFilter(e) {
-    setFind( input );
-  }
-  */
-
-  useEffect(
-    () => {
-      updateTab1( input, setContent1, doChange );
-    }, [input]
-  )
-
-  return (
-    <div>
-      <HeaderComponent className="my-4"/>
-
-      <ul className='nav nav-tabs'>
-        <li className='nav-item'>
-          <a href="#tab1" className="nav-link active" data-bs-toggle="tab">List</a>
-        </li>
-        <li className='nav-item'>
-          <a href="#tab2" className="nav-link" data-bs-toggle="tab">Create</a>
-        </li>
-        <li className='nav-item'>
-          <a href="#tab3" className="nav-link" data-bs-toggle="tab">Update</a>
-        </li>
-        <li className='nav-item'>
-          <a href="#tab4" className="nav-link" data-bs-toggle="tab">Delete</a>
-        </li>
-      </ul>
-
-      <div className="tab-content">
-        <div id="tab1" className='my-2 tab-pane active'>
-          {content1}
+    return (
+        <div>
+            {content}
         </div>
-        <div id="tab2" className='my-2 tab-pane'>
-          {content2}
-        </div>
-        <div id="tab3" className='my-2 tab-pane'>
-          {content3}
-        </div>
-        <div id="tab4" className='my-2 tab-pane'>
-          {content4}
-        </div>
-      </div>
+    );
+}
 
-      <p>
-        <a className='btn btn-primary' href="." onClick={Auth.signOut}>
-          Sign Out
-        </a>
-      </p>
+function PageLinks(props){
 
-    </div>
-  );
+    const s_prev = "< Prev";
+    const s_next = "Next >";
+
+    return (
+        //<Box display="flex" marginTop="10px" marginBottom="10px" alignSelf="center" alignItems="center" alignContent="center">
+        <Box>
+            <Inline spacing="none">
+                <Link href="/events?page=1">&nbsp;{s_prev}&nbsp;</Link>
+                <Text>&nbsp;1&nbsp;</Text>
+                <Link href="/events?page=2">&nbsp;2&nbsp;</Link>
+                <Link href="/events?page=3">&nbsp;3&nbsp;</Link>
+                <Link href="/events?page=3">&nbsp;{s_next}&nbsp;</Link>
+            </Inline>
+        </Box>
+    );    
+}
+
+function GateEventListPage(props){
+
+    console.log(props);
+
+    return (
+        <div>
+            <PageLinks></PageLinks>
+            <GateEventList></GateEventList>
+            <PageLinks></PageLinks>
+        </div>
+    );
 }
 
 
-export default withAuthenticator(App);
+function Other() {
+
+    const header = <Header
+        title={"Panorama Security App"}
+        rightContent={
+            //<Button variant="primary">Button test</Button>
+            <Icon name="AccountCircle" fontSize="large" variant="Outlined"/>
+        }
+    />;
+    
+    const navigation_header = {
+        href: "/",
+        text: 'Menu'
+    };
+
+    const navigation_items = [
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "Charts",
+            "href": "/charts"
+        },
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "Events",
+            "href": "/events"
+        },
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "Live Cameras",
+            "href": "/livecameras"
+        },
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "Advanced",
+            "href": "/advanced",
+            "items" : [
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Manage Accounts",
+                    "href": "/accounts"
+                },
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Archived Data",
+                    "href": "/archives"
+                },
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Manage AI Model",
+                    "href": "/model"
+                },
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Add-ons",
+                    "href": "/addons"
+                },
+            ],
+        },
+
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "Help",
+            "href": "/help",
+            "items" : [
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Documents",
+                    "href": "/documents"
+                },
+                {
+                    "type": SideNavigationItemType.LINK,
+                    "text": "Report issues",
+                    "href": "/reportissues"
+                },
+            ],
+        },
+        {
+            "type": SideNavigationItemType.LINK,
+            "text": "About this application",
+            "href": "/about"
+        },
+    ];
+
+    const breadcrumbs_items = [
+        {
+            text: "Home",
+            href: "/",
+        },
+        {
+            text: "AAA",
+            href: "/",
+        },
+        {
+            text: "BBB",
+            href: "#",
+        }
+    ];
+
+    const navigation = <SideNavigation header={navigation_header} items={navigation_items} />
+    const breadcrumbs = <BreadcrumbGroup items={breadcrumbs_items} />
+
+    return (
+        <NorthStarThemeProvider>
+            <BrowserRouter>
+                <AppLayout header={header} navigation={navigation} breadcrumbs={breadcrumbs} >
+                    <Switch>
+                        <Route exact path="/" component={HomePage} />
+                        <Route exact path="/events" component={GateEventListPage} />
+                        <Route exact path="/notimplemented" component={NotImplementedPage} />
+                        <Route exact path="/about" component={AboutPage} />
+                        <Route component={NotFoundPage} />
+                    </Switch>
+                </AppLayout>
+            </BrowserRouter>
+        </NorthStarThemeProvider>
+    );
+}
+
+//export default withAuthenticator(Other);
+export default Other;
