@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/event": {
+      "name": "/event",
+      "lambdaFunction": "cvsecurity1561746f",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

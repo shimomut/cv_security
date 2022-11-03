@@ -11,12 +11,7 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "api": {
-        "cvsecurity": {
-            "GraphQLAPIKeyOutput": "string",
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
-        },
-        "api60ee79cf": {
+        "restapi": {
             "RootUrl": "string",
             "ApiName": "string",
             "ApiId": "string"
@@ -29,7 +24,7 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "function": {
-        "cvsecuritydfb0e247": {
+        "cvsecurity1561746f": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",

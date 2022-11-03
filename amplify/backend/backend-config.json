@@ -31,34 +31,13 @@
     }
   },
   "api": {
-    "cvsecurity": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
-              "description": "api key description"
-            }
-          },
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AWS_IAM"
-            }
-          ]
-        }
-      }
-    },
-    "api60ee79cf": {
+    "restapi": {
       "service": "API Gateway",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "cvsecuritydfb0e247",
+          "resourceName": "cvsecurity1561746f",
           "attributes": [
             "Name",
             "Arn"
@@ -75,7 +54,7 @@
     }
   },
   "function": {
-    "cvsecuritydfb0e247": {
+    "cvsecurity1561746f": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",

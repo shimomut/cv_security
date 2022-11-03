@@ -147,7 +147,7 @@ function GateEventList(){
 
     useEffect(
         () => {
-            API.get("api60ee79cf", "/gateevent").then(
+            API.get("restapi", "/event").then(
 
                 response => {
         
