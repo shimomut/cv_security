@@ -27,6 +27,7 @@ import LoadingIndicator from 'aws-northstar/components/LoadingIndicator';
 import Inline from 'aws-northstar/layouts/Inline';
 
 import AddOnsPage from './pages/AddOnsPage';
+import AboutPage from './pages/AboutPage';
 
 import {
     BrowserRouter,
@@ -37,14 +38,6 @@ import {
 
 function HomePage(props) {
     return NotImplementedPage()
-}
-
-function AboutPage(props) {
-    return (
-        <div>
-            <p>This is About page.</p>
-        </div>
-    );
 }
 
 function NotImplementedPage(props){
