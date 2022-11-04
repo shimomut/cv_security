@@ -26,6 +26,7 @@ import Link from 'aws-northstar/components/Link';
 import LoadingIndicator from 'aws-northstar/components/LoadingIndicator';
 import Inline from 'aws-northstar/layouts/Inline';
 
+import ChartsPage from './pages/ChartsPage';
 import AddOnsPage from './pages/AddOnsPage';
 import AboutPage from './pages/AboutPage';
 
@@ -313,6 +314,7 @@ function Other() {
                 <AppLayout header={header} navigation={navigation} >
                     <Switch>
                         <Route exact path="/" component={HomePage} />
+                        <Route exact path="/charts" component={ChartsPage} />
                         <Route exact path="/events" component={GateEventListPage} />
                         <Route exact path="/addons" component={AddOnsPage} />
                         <Route exact path="/notimplemented" component={NotImplementedPage} />
