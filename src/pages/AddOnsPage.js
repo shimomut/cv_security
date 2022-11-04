@@ -44,7 +44,7 @@ function AddOnsPage(props) {
                     <AddOnCard title="People counting" price="$ XXX.xx / month" image="addon2.jpg"  />
                 </Grid>
                 <Grid item xs={6}>
-                    <AddOnCard title="Safety monitoring" price="$ XXX.xx / month" image="addon3.jpg" />
+                    <AddOnCard title="Slip & fall detection" price="$ XXX.xx / month" image="addon3.jpg" />
                 </Grid>
                 <Grid item xs={6}>
                     <AddOnCard title="Anomaly detection" price="$ XXX.xx / month" image="addon4.jpg" />
