@@ -11,8 +11,8 @@ import AppLayout from 'aws-northstar/layouts/AppLayout';
 import Header from 'aws-northstar/components/Header';
 import SideNavigation from 'aws-northstar/components/SideNavigation';
 import { SideNavigationItemType } from 'aws-northstar/components/SideNavigation';
-import BreadcrumbGroup from 'aws-northstar/components/BreadcrumbGroup';
-import Button from 'aws-northstar/components/Button';
+//import BreadcrumbGroup from 'aws-northstar/components/BreadcrumbGroup';
+//import Button from 'aws-northstar/components/Button';
 import Icon from 'aws-northstar/components/Icon';
 import Text from 'aws-northstar/components/Text';
 import Box from 'aws-northstar/layouts/Box';
@@ -290,6 +290,7 @@ function Other() {
         },
     ];
 
+    /*
     const breadcrumbs_items = [
         {
             text: "Home",
@@ -304,9 +305,10 @@ function Other() {
             href: "#",
         }
     ];
+    */
 
     const navigation = <SideNavigation header={navigation_header} items={navigation_items} />
-    const breadcrumbs = <BreadcrumbGroup items={breadcrumbs_items} />
+    //const breadcrumbs = <BreadcrumbGroup items={breadcrumbs_items} />
 
     return (
         <NorthStarThemeProvider>

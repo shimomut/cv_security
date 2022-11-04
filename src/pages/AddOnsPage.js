@@ -1,8 +1,9 @@
 
 import Container from 'aws-northstar/layouts/Container';
 import Text from 'aws-northstar/components/Text';
-import Button from 'aws-northstar/components/Button';import Card from 'aws-northstar/components/Card';
-import Box from 'aws-northstar/layouts/Box';
+import Button from 'aws-northstar/components/Button';
+//import Card from 'aws-northstar/components/Card';
+//import Box from 'aws-northstar/layouts/Box';
 import Grid from 'aws-northstar/layouts/Grid';
 
 
@@ -15,8 +16,8 @@ function AddOnCard(props){
     }
     else
     {
-        var button = <Button variant='primary'>Subscribe</Button>;
-        var price = <Text>{props.price}</Text>;
+        button = <Button variant='primary'>Subscribe</Button>;
+        price = <Text>{props.price}</Text>;
     }
 
     return (

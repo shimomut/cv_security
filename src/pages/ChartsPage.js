@@ -1,8 +1,8 @@
 
 import Container from 'aws-northstar/layouts/Container';
-import Text from 'aws-northstar/components/Text';
-import Button from 'aws-northstar/components/Button'; import Card from 'aws-northstar/components/Card';
-import Box from 'aws-northstar/layouts/Box';
+//import Text from 'aws-northstar/components/Text';
+//import Button from 'aws-northstar/components/Button'; import Card from 'aws-northstar/components/Card';
+//import Box from 'aws-northstar/layouts/Box';
 import Grid from 'aws-northstar/layouts/Grid';
 import LineChart, { Line, NORTHSTAR_COLORS, YAxis, XAxis, Tooltip, Legend, CartesianGrid } from 'aws-northstar/charts/LineChart';
 import PieChart, { Pie } from 'aws-northstar/charts/PieChart';
